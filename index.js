@@ -27,7 +27,8 @@ const elements = {
   showSideBarBtn: document.querySelector('#show-side-bar-btn'),
   themeSwitch: document.querySelector('#switch'),
   createNewTaskBtn: document.querySelector('#add-new-task-btn'),
-  modalWindow: document.querySelector('#new-task-modal-window')
+  modalWindow: document.querySelector('#new-task-modal-window'),
+  sidebar: document.querySelector('#side-bar-div')
 }
 
 let activeBoard = ""
@@ -167,8 +168,8 @@ function setupEventListeners() {
   });
 
   // Show sidebar event listener
-  elements.hideSideBarBtn.click(() => toggleSidebar(false));
-  elements.showSideBarBtn.click(() => toggleSidebar(true));
+  elements.hideSideBarBtn.addEventListener('click', () => toggleSidebar(false));
+  elements.showSideBarBtn.addEventListener('click', () => toggleSidebar(true));
 
   // Theme switch event listener
   elements.themeSwitch.addEventListener('change', toggleTheme);
@@ -214,7 +215,8 @@ function addTask(event) {
 
 
 function toggleSidebar(show) {
- 
+ elements.sidebar.style.display = show ? 'flex':'none';
+ elements.showSideBarBtn.style.display = show ? 'none':'flex';
 }
 
 function toggleTheme() {
@@ -263,6 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function init() {
   setupEventListeners();
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
+  console.log(showSidebar);
   toggleSidebar(showSidebar);
   const isLightTheme = localStorage.getItem('light-theme') === 'enabled';
   document.body.classList.toggle('light-theme', isLightTheme);
