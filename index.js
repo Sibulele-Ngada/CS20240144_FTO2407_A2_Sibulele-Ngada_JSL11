@@ -1,7 +1,7 @@
 // TASK: import helper functions from utils
 import {getTasks, createNewTask, patchTask, putTask, deleteTask} from "./utils/taskFunctions.js"
 // TASK: import initialData
-import initialData from "./initialData.js"
+import {initialData} from "./initialData.js"
 
 
 /*************************************************************************************************************************************************
@@ -145,7 +145,7 @@ function addTaskToUI(task) {
 function setupEventListeners() {
   // Cancel editing task event listener
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
-  cancelEditBtn.onclick(() => toggleModal(false, elements.editTaskModal));
+  cancelEditBtn.addEventListener('click',() => toggleModal(false, elements.editTaskModal));
 
   // Cancel adding new task event listener
   const cancelAddTaskBtn = document.getElementById('cancel-add-task-btn');
