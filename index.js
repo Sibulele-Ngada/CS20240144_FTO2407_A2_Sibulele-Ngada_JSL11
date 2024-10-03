@@ -12,7 +12,8 @@ import {initialData} from "./initialData.js"
 function initializeData() {
   if (!localStorage.getItem('tasks')) {
     localStorage.setItem('tasks', JSON.stringify(initialData)); 
-    localStorage.setItem('showSideBar', 'true')
+    localStorage.setItem('showSideBar', 'true');
+    localStorage.setItem(JSON.stringify('theme', 'false'));
   } else {
     console.log('Data already exists in localStorage');
   }
@@ -43,6 +44,7 @@ function fetchAndDisplayBoardsAndTasks() {
   const tasks = getTasks();
   const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
   displayBoards(boards);
+  toggleSidebar(JSON.parse(localStorage.getItem('showSideBar')));
   if (boards.length > 0) {
     const localStorageBoard = JSON.parse(localStorage.getItem("activeBoard"))
     activeBoard = localStorageBoard ? localStorageBoard :  boards[0]; 
@@ -224,10 +226,11 @@ function addTask(event) {
 function toggleSidebar(show) {
  elements.sidebar.style.display = show ? 'flex':'none';
  elements.showSideBarBtn.style.display = show ? 'none':'flex';
+ localStorage.setItem('showSideBar', JSON.stringify(show));
 }
 
 function toggleTheme() {
- document.documentElement.classList.toggle("light-theme");
+  document.documentElement.classList.toggle("light-theme");
 }
 
 
@@ -237,14 +240,14 @@ function openEditTaskModal(task) {
   elements.editTaskTitle.value = task.title;
   elements.editTaskDesc.value = task.description;
   elements.editTaskStatus.value = task.status;
-
+  
   // Get button elements from the task modal
   const saveBtn = document.querySelector('#save-task-changes-btn');
   const deleteBtn = document.querySelector('#delete-task-btn');
-
+  
   // Call saveTaskChanges upon click of Save Changes button
   saveBtn.addEventListener('click', () => saveTaskChanges(task.id));
-
+  
   // Delete task using a helper function and close the task modal
   deleteBtn.addEventListener('click', () => {
     deleteTask(task.id);
@@ -259,7 +262,7 @@ function saveTaskChanges(taskId) {
   const newTitle = elements.editTaskTitle.value;
   const newDesc = elements.editTaskDesc.value;
   const newStatus = elements.editTaskStatus.value;
-
+  
   // Create an object with the updated task details
   const updatedTask = {
     "id": taskId,
@@ -268,10 +271,10 @@ function saveTaskChanges(taskId) {
     "status": newStatus,
     "board": activeBoard
   };
-
+  
   // Update task using a hlper functoin
   putTask(taskId, updatedTask);
-
+  
   // Close the modal and refresh the UI to reflect the changes
   toggleModal(false, elements.editTaskModal);
   refreshTasksUI();
