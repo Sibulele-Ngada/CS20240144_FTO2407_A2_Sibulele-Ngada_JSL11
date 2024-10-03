@@ -1,4 +1,4 @@
-export const initialData = [
+export default initialData = [
     {
       "id": 1,
       "title": "Launch Epic Career 🚀",
