@@ -233,7 +233,8 @@ function openEditTaskModal(task) {
   document.querySelector('#edit-select-status').value = task.status;
 
   // Get button elements from the task modal
-
+  const saveBtn = document.querySelector('#save-task-changes-btn');
+  const deleteBtn = document.querySelector('#delete-task-btn');
 
   // Call saveTaskChanges upon click of Save Changes button
  
