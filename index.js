@@ -22,6 +22,12 @@ function initializeData() {
 const elements = {
   headerBoardName: document.querySelector('#header-board-name'),
   columnDivs: document.querySelectorAll('.column-div'),
+  filterDiv: document.querySelector('#filterDiv'),
+  hideSideBarBtn: document.querySelector('#hide-side-bar-btn'),
+  showSideBarBtn: document.querySelector('#show-side-bar-btn'),
+  themeSwitch: document.querySelector('#switch'),
+  createNewTaskBtn: document.querySelector('#add-new-task-btn'),
+  modalWindow: document.querySelector('#new-task-modal-window')
 }
 
 let activeBoard = ""
