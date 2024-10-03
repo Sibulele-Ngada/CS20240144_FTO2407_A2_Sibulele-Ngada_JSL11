@@ -11,7 +11,7 @@ import {initialData} from "./initialData.js"
 // Function checks if local storage already has data, if not it loads initialData to localStorage
 function initializeData() {
   if (!localStorage.getItem('tasks')) {
-    localStorage.setItem('tasks', JSON.stringify(initialData)); 
+    localStorage.setItem('tasks', JSON.stringify({...initialData})); 
     localStorage.setItem('showSideBar', 'true')
   } else {
     console.log('Data already exists in localStorage');
@@ -263,9 +263,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function init() {
+  initializeData();
   setupEventListeners();
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
-  console.log(showSidebar);
   toggleSidebar(showSidebar);
   const isLightTheme = localStorage.getItem('light-theme') === 'enabled';
   document.body.classList.toggle('light-theme', isLightTheme);
