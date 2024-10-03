@@ -1,5 +1,5 @@
 // TASK: import helper functions from utils
-import taskFunctions from "./utils/taskFunctions"
+import {getTasks, createNewTask, patchTask, putTask, deleteTask} from "./utils/taskFunctions"
 // TASK: import initialData
 import initialData from "./initialData"
 
