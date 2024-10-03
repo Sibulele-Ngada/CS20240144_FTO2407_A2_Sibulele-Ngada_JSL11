@@ -148,7 +148,7 @@ function addTaskToUI(task) {
   taskElement.textContent = task.title; // Modify as needed
   taskElement.setAttribute('data-task-id', task.id);
   
-  tasksContainer.appendChild(); 
+  tasksContainer.appendChild(taskElement); 
 }
 
 
@@ -205,12 +205,15 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      
+      "title": document.querySelector('#title-input').value,
+      "description": document.querySelector('#desc-input').value,
+      "status": document.querySelector('#select-status').value,
+      "board": activeBoard
     };
     const newTask = createNewTask(task);
     if (newTask) {
       addTaskToUI(newTask);
-      toggleModal(false);
+      toggleModal(false, elements.modalWindow);
       elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
       event.target.reset();
       refreshTasksUI();
