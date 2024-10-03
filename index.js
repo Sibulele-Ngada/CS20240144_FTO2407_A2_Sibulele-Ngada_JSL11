@@ -20,7 +20,8 @@ function initializeData() {
 
 // TASK: Get elements from the DOM
 const elements = {
-  headerBoardName: document.querySelector('#header-board-name')
+  headerBoardName: document.querySelector('#header-board-name'),
+  columnDivs: document.querySelectorAll('.column-div'),
 }
 
 let activeBoard = ""
