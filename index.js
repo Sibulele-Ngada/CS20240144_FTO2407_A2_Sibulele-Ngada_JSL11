@@ -46,8 +46,8 @@ function fetchAndDisplayBoardsAndTasks() {
   if (boards.length > 0) {
     const localStorageBoard = JSON.parse(localStorage.getItem("activeBoard"))
     activeBoard = localStorageBoard ? localStorageBoard :  boards[0]; 
-    elements.headerBoardName.textContent = activeBoard
-    styleActiveBoard(activeBoard)
+    elements.headerBoardName.textContent = activeBoard;
+    styleActiveBoard(activeBoard);
     refreshTasksUI();
   }
 }
@@ -101,7 +101,6 @@ function filterAndDisplayTasksByBoard(boardName) {
       // Listen for a click event on each task and open a modal
       taskElement.addEventListener('click', () => { 
         openEditTaskModal(task);
-        console.log(task);
       });
 
       tasksContainer.appendChild(taskElement);
@@ -244,7 +243,11 @@ function openEditTaskModal(task) {
   saveBtn.addEventListener('click', () => saveTaskChanges(task.id));
 
   // Delete task using a helper function and close the task modal
-
+  deleteBtn.addEventListener('click', () => {
+    deleteTask(task.id);
+    toggleModal(false, elements.editTaskModal);
+    refreshTasksUI();
+  });
   toggleModal(true, elements.editTaskModal); // Show the edit task modal
 }
 
