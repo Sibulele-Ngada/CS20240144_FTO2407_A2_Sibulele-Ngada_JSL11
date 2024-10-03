@@ -90,7 +90,6 @@ function filterAndDisplayTasksByBoard(boardName) {
     column.appendChild(tasksContainer);
 
     filteredTasks.filter(task => task.status === status).forEach(task => { 
-      console.log(task)
       const taskElement = document.createElement("div");
       taskElement.classList.add("task-div");
       taskElement.textContent = task.title;
@@ -229,7 +228,9 @@ function toggleTheme() {
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
-  
+  document.querySelector('#edit-task-title-input').value = task.title;
+  document.querySelector('#edit-task-desc-input').value = task.description;
+  document.querySelector('#edit-select-status').value = task.status;
 
   // Get button elements from the task modal
 
