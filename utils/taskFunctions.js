@@ -32,7 +32,7 @@ export const patchTask = (id, updates) => {
 };
 
 export const putTask = (id, updatedTask) => {
-  const tasks = getTasks();
+  let tasks = getTasks();
   const taskIndex = tasks.findIndex((task) => task.id === id);
   if (taskIndex > -1) {
     tasks[taskIndex] = updatedTask;

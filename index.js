@@ -92,7 +92,7 @@ function filterAndDisplayTasksByBoard(boardName) {
     const tasksContainer = document.createElement("div");
     column.appendChild(tasksContainer);
 
-    filteredTasks.filter(task => task.status === status).forEach(task => { 
+    filteredTasks.filter(task => task.status === status).forEach(task => {
       const taskElement = document.createElement("div");
       taskElement.classList.add("task-div");
       taskElement.textContent = task.title;
@@ -101,6 +101,7 @@ function filterAndDisplayTasksByBoard(boardName) {
       // Listen for a click event on each task and open a modal
       taskElement.addEventListener('click', () => { 
         openEditTaskModal(task);
+        console.log(task);
       });
 
       tasksContainer.appendChild(taskElement);
@@ -243,7 +244,6 @@ function openEditTaskModal(task) {
   saveBtn.addEventListener('click', () => saveTaskChanges(task.id));
 
   // Delete task using a helper function and close the task modal
-
 
   toggleModal(true, elements.editTaskModal); // Show the edit task modal
 }
