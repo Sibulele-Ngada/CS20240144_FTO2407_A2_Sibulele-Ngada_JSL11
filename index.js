@@ -29,7 +29,10 @@ const elements = {
   createNewTaskBtn: document.querySelector('#add-new-task-btn'),
   modalWindow: document.querySelector('#new-task-modal-window'),
   editTaskModal: document.querySelector('.edit-task-modal-window'),
-  sidebar: document.querySelector('#side-bar-div')
+  sidebar: document.querySelector('#side-bar-div'),
+  editTaskTitle: document.querySelector('#edit-task-title-input'),
+  editTaskDesc: document.querySelector('#edit-task-desc-input'),
+  editTaskStatus: document.querySelector('#edit-select-status')
 }
 
 let activeBoard = ""
@@ -228,16 +231,16 @@ function toggleTheme() {
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
-  document.querySelector('#edit-task-title-input').value = task.title;
-  document.querySelector('#edit-task-desc-input').value = task.description;
-  document.querySelector('#edit-select-status').value = task.status;
+  elements.editTaskTitle.value = task.title;
+  elements.editTaskDesc.value = task.description;
+  elements.editTaskStatus.value = task.status;
 
   // Get button elements from the task modal
   const saveBtn = document.querySelector('#save-task-changes-btn');
   const deleteBtn = document.querySelector('#delete-task-btn');
 
   // Call saveTaskChanges upon click of Save Changes button
- 
+  saveBtn.addEventListener('click', () => saveTaskChanges(task.id));
 
   // Delete task using a helper function and close the task modal
 
@@ -247,16 +250,24 @@ function openEditTaskModal(task) {
 
 function saveTaskChanges(taskId) {
   // Get new user inputs
-  
+  const newTitle = elements.editTaskTitle.value;
+  const newDesc = elements.editTaskDesc.value;
+  const newStatus = elements.editTaskStatus.value;
 
   // Create an object with the updated task details
-
+  const updatedTask = {
+    "id": taskId,
+    "title": newTitle,
+    "description": newDesc,
+    "status": newStatus,
+    "board": activeBoard
+  };
 
   // Update task using a hlper functoin
- 
+  putTask(taskId, updatedTask);
 
   // Close the modal and refresh the UI to reflect the changes
-
+  toggleModal(false, elements.editTaskModal);
   refreshTasksUI();
 }
 
