@@ -28,6 +28,7 @@ const elements = {
   themeSwitch: document.querySelector('#switch'),
   createNewTaskBtn: document.querySelector('#add-new-task-btn'),
   modalWindow: document.querySelector('#new-task-modal-window'),
+  editTaskModal: document.querySelector('.edit-task-modal-window'),
   sidebar: document.querySelector('#side-bar-div')
 }
 
@@ -89,6 +90,7 @@ function filterAndDisplayTasksByBoard(boardName) {
     column.appendChild(tasksContainer);
 
     filteredTasks.filter(task => task.status === status).forEach(task => { 
+      console.log(task)
       const taskElement = document.createElement("div");
       taskElement.classList.add("task-div");
       taskElement.textContent = task.title;
@@ -157,13 +159,13 @@ function setupEventListeners() {
   // Cancel adding new task event listener
   const cancelAddTaskBtn = document.getElementById('cancel-add-task-btn');
   cancelAddTaskBtn.addEventListener('click', () => {
-    toggleModal(false);
+    toggleModal(false, elements.modalWindow);
     elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
 
   // Clicking outside the modal to close it
   elements.filterDiv.addEventListener('click', () => {
-    toggleModal(false);
+    toggleModal(false, elements.modalWindow);
     elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
 
@@ -176,7 +178,7 @@ function setupEventListeners() {
 
   // Show Add New Task Modal event listener
   elements.createNewTaskBtn.addEventListener('click', () => {
-    toggleModal(true);
+    toggleModal(true, elements.modalWindow);
     elements.filterDiv.style.display = 'block'; // Also show the filter overlay
   });
 
@@ -188,7 +190,7 @@ function setupEventListeners() {
 
 // Toggles tasks modal
 // Task: Fix bugs
-function toggleModal(show, modal = elements.modalWindow) {
+function toggleModal(show, modal) {
   modal.style.display = show ? 'block' : 'none'; 
 }
 
