@@ -13,7 +13,7 @@ function initializeData() {
   if (!localStorage.getItem('tasks')) {
     localStorage.setItem('tasks', JSON.stringify(initialData)); 
     localStorage.setItem('showSideBar', 'true');
-    localStorage.setItem(JSON.stringify('theme', 'false'));
+    localStorage.setItem('light-theme', 'false');
   } else {
     console.log('Data already exists in localStorage');
   }
@@ -231,6 +231,8 @@ function toggleSidebar(show) {
 
 function toggleTheme() {
   document.documentElement.classList.toggle("light-theme");
+  const lightTheme = JSON.parse(localStorage.getItem('light-theme'));
+  localStorage.setItem('light-theme', JSON.stringify(!lightTheme));
 }
 
 
@@ -291,7 +293,7 @@ function init() {
   setupEventListeners();
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
   toggleSidebar(showSidebar);
-  const isLightTheme = localStorage.getItem('light-theme') === 'enabled';
-  document.body.classList.toggle('light-theme', isLightTheme);
+  const isLightTheme = JSON.parse(localStorage.getItem('light-theme'));
+  isLightTheme ?  (document.documentElement.classList.toggle("light-theme"), elements.themeSwitch.setAttribute('checked', isLightTheme)): "";
   fetchAndDisplayBoardsAndTasks(); // Initial display of boards and tasks
 }
