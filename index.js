@@ -3,7 +3,6 @@ import {getTasks, createNewTask, patchTask, putTask, deleteTask} from "./utils/t
 // TASK: import initialData
 import {initialData} from "./initialData.js"
 
-
 /*************************************************************************************************************************************************
  * FIX BUGS!!!
  * **********************************************************************************************************************************************/
@@ -110,7 +109,6 @@ function filterAndDisplayTasksByBoard(boardName) {
   });
 }
 
-
 function refreshTasksUI() {
   filterAndDisplayTasksByBoard(activeBoard);
 }
@@ -128,7 +126,6 @@ function styleActiveBoard(boardName) {
     }
   });
 }
-
 
 function addTaskToUI(task) {
   const column = document.querySelector(`.column-div[data-status="${task.status}"]`); 
@@ -152,8 +149,6 @@ function addTaskToUI(task) {
   
   tasksContainer.appendChild(taskElement); 
 }
-
-
 
 function setupEventListeners() {
   // Cancel editing task event listener
@@ -222,7 +217,6 @@ function addTask(event) {
     }
 }
 
-
 function toggleSidebar(show) {
  elements.sidebar.style.display = show ? 'flex':'none';
  elements.showSideBarBtn.style.display = show ? 'none':'flex';
@@ -230,9 +224,11 @@ function toggleSidebar(show) {
 }
 
 function toggleTheme() {
-  document.documentElement.classList.toggle("light-theme");
   const lightTheme = JSON.parse(localStorage.getItem('light-theme'));
   localStorage.setItem('light-theme', JSON.stringify(!lightTheme));
+  document.documentElement.classList.toggle("light-theme");
+  const logo = !lightTheme ? './assets/logo-light.svg' : './assets/logo-dark.svg';
+  document.querySelector('#logo').setAttribute('src', logo);
 }
 
 function openEditTaskModal(task) {
@@ -292,6 +288,6 @@ function init() {
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
   toggleSidebar(showSidebar);
   const isLightTheme = JSON.parse(localStorage.getItem('light-theme'));
-  isLightTheme ?  (document.documentElement.classList.toggle("light-theme"), elements.themeSwitch.setAttribute('checked', isLightTheme)): "";
+  isLightTheme ?  (document.documentElement.classList.toggle("light-theme"), elements.themeSwitch.setAttribute('checked', isLightTheme), document.querySelector('#logo').setAttribute('src', './assets/logo-light.svg')): "";
   fetchAndDisplayBoardsAndTasks(); // Initial display of boards and tasks
 }
