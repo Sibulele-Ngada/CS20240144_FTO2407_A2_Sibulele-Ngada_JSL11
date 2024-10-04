@@ -235,8 +235,6 @@ function toggleTheme() {
   localStorage.setItem('light-theme', JSON.stringify(!lightTheme));
 }
 
-
-
 function openEditTaskModal(task) {
   // Set task details in modal inputs
   elements.editTaskTitle.value = task.title;
