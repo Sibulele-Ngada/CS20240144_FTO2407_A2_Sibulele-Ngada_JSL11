@@ -21,14 +21,14 @@ function initializeData() {
 // TASK: Get elements from the DOM
 const elements = {
   headerBoardName: document.querySelector('#header-board-name'),
-  columnDivs: document.querySelectorAll('.column-div'),
+  columnDivs: document.querySelectorAll('.column-div'), // querySeletorAll() used to iterate of status columns
   filterDiv: document.querySelector('#filterDiv'),
   hideSideBarBtn: document.querySelector('#hide-side-bar-btn'),
   showSideBarBtn: document.querySelector('#show-side-bar-btn'),
   themeSwitch: document.querySelector('#switch'),
   createNewTaskBtn: document.querySelector('#add-new-task-btn'),
   modalWindow: document.querySelector('#new-task-modal-window'),
-  editTaskModal: document.querySelector('.edit-task-modal-window'),
+  editTaskModal: document.querySelector('.edit-task-modal-window'), // no id, selscted using class
   sidebar: document.querySelector('#side-bar-div'),
   editTaskTitle: document.querySelector('#edit-task-title-input'),
   editTaskDesc: document.querySelector('#edit-task-desc-input'),
@@ -41,7 +41,8 @@ let activeBoard = ""
 // TASK: FIX BUGS
 function fetchAndDisplayBoardsAndTasks() {
   const tasks = getTasks();
-  const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
+  const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))]; // Use Set() to get list of unique boards from tasks
+
   displayBoards(boards);
   toggleSidebar(JSON.parse(localStorage.getItem('showSideBar')));
   if (boards.length > 0) {
@@ -117,7 +118,6 @@ function refreshTasksUI() {
 // TASK: Fix Bugs
 function styleActiveBoard(boardName) {
   document.querySelectorAll('.board-btn').forEach(btn => { 
-    
     if(btn.textContent === boardName) {
       btn.classList.add('active') 
     }
@@ -134,7 +134,7 @@ function addTaskToUI(task) {
     return;
   }
 
-  let tasksContainer = column.querySelector('.tasks-container');
+  const tasksContainer = column.querySelector('.tasks-container');
   if (!tasksContainer) {
     console.warn(`Tasks container not found for status: ${task.status}, creating one.`);
     tasksContainer = document.createElement('div');
@@ -207,6 +207,7 @@ function addTask(event) {
       "status": document.querySelector('#select-status').value,
       "board": activeBoard
     };
+    // Assign new task to local storage and add to UI
     const newTask = createNewTask(task);
     if (newTask) {
       addTaskToUI(newTask);
@@ -218,17 +219,17 @@ function addTask(event) {
 }
 
 function toggleSidebar(show) {
- elements.sidebar.style.display = show ? 'flex':'none';
- elements.showSideBarBtn.style.display = show ? 'none':'flex';
- localStorage.setItem('showSideBar', JSON.stringify(show));
+ elements.sidebar.style.display = show ? 'flex':'none'; // Toggle sidebar
+ elements.showSideBarBtn.style.display = show ? 'none':'flex'; // Toggle show button visibility
+ localStorage.setItem('showSideBar', JSON.stringify(show)); //Assign current status to local storage
 }
 
 function toggleTheme() {
-  const lightTheme = JSON.parse(localStorage.getItem('light-theme'));
-  localStorage.setItem('light-theme', JSON.stringify(!lightTheme));
-  document.documentElement.classList.toggle("light-theme");
-  const logo = !lightTheme ? './assets/logo-light.svg' : './assets/logo-dark.svg';
-  document.querySelector('#logo').setAttribute('src', logo);
+  const lightTheme = JSON.parse(localStorage.getItem('light-theme')); // Get previous them
+  localStorage.setItem('light-theme', JSON.stringify(!lightTheme)); // Set new them
+  document.documentElement.classList.toggle("light-theme"); // Toggle light-them css class on root element
+  const logo = !lightTheme ? './assets/logo-light.svg' : './assets/logo-dark.svg'; //Toggle light/dark mode logo
+  document.querySelector('#logo').setAttribute('src', logo); //Display logo
 }
 
 function openEditTaskModal(task) {
@@ -288,6 +289,10 @@ function init() {
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
   toggleSidebar(showSidebar);
   const isLightTheme = JSON.parse(localStorage.getItem('light-theme'));
-  isLightTheme ?  (document.documentElement.classList.toggle("light-theme"), elements.themeSwitch.setAttribute('checked', isLightTheme), document.querySelector('#logo').setAttribute('src', './assets/logo-light.svg')): "";
+  if (isLightTheme) {
+    document.documentElement.classList.toggle("light-theme");
+    elements.themeSwitch.setAttribute('checked', isLightTheme);
+    document.querySelector('#logo').setAttribute('src', './assets/logo-light.svg');
+  }
   fetchAndDisplayBoardsAndTasks(); // Initial display of boards and tasks
 }
