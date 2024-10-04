@@ -134,7 +134,7 @@ function addTaskToUI(task) {
     return;
   }
 
-  const tasksContainer = column.querySelector('.tasks-container');
+  let tasksContainer = column.querySelector('.tasks-container');
   if (!tasksContainer) {
     console.warn(`Tasks container not found for status: ${task.status}, creating one.`);
     tasksContainer = document.createElement('div');
@@ -209,6 +209,7 @@ function addTask(event) {
     };
     // Assign new task to local storage and add to UI
     const newTask = createNewTask(task);
+    console.log(newTask);
     if (newTask) {
       addTaskToUI(newTask);
       toggleModal(false, elements.modalWindow);
@@ -291,7 +292,7 @@ function init() {
   const isLightTheme = JSON.parse(localStorage.getItem('light-theme'));
   if (isLightTheme) {
     document.documentElement.classList.toggle("light-theme");
-    elements.themeSwitch.setAttribute('checked', isLightTheme);
+    elements.themeSwitch.setAttribute('checked', isLightTheme); // Set them selector switch to correct position for light mode
     document.querySelector('#logo').setAttribute('src', './assets/logo-light.svg');
   }
   fetchAndDisplayBoardsAndTasks(); // Initial display of boards and tasks
